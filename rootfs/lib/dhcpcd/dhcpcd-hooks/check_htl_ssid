@@ -1,0 +1,7 @@
+if iwconfig | grep HTL;
+then
+	echo "export http_proxy=\"http://proxy.htl.rankweil:8080/\"" > /etc/profile.d/htl_proxy.sh
+	echo "export https_proxy=\"https://proxy.htl.rankweil:8080/\"" >> /etc/profile.d/htl_proxy.sh 
+	chmod 755 /etc/profile.d/htl_proxy.sh
+	echo "Acquire::http::Proxy \"http://proxy.htl.rankweil:8080/\";" > /etc/apt/apt.conf.d/htl_proxy
+fi

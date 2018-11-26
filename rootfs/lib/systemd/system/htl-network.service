@@ -1,0 +1,12 @@
+[Unit]
+Description=Apply network configuration for HTL Rankweil
+ConditionPathExists=/boot/htl.config
+Before=avahi-daemon.service dhcpcd.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/share/htl_setup/setup.sh
+
+[Install]
+WantedBy=multi-user.target
