@@ -10,4 +10,4 @@
 
 ![Putty Connection](documentation/putty.png)
 
-
+If you're unable to ping your Raspberry via `pi-max-muster.local` (please adapt here your username), you may have to install the [Bonjour Service](https://support.apple.com/kb/DL999). Another solution is work in progress.
