@@ -1,0 +1,17 @@
+if ping proxy.htl.ranwkeil -c1;
+then
+	echo "export http_proxy=\"http://proxy.htl.rankweil:8080/\"" > /etc/profile.d/htl_proxy.sh
+	echo "export https_proxy=\"https://proxy.htl.rankweil:8080/\"" >> /etc/profile.d/htl_proxy.sh
+	chmod 755 /etc/profile.d/htl_proxy.sh
+	echo "Acquire::http::Proxy \"http://proxy.htl.rankweil:8080/\";" > /etc/apt/apt.conf.d/htl_proxy
+fi
+
+echo -n '{"hostname":"' > data.json
+hostname | tr -d '\n' >> data.json
+echo -n `", "ip":"' >> data.json
+hostname -I | tr -d '\n' >> data.json
+echo -n '"}' >> data.json
+
+curl -i -X POST -H "Content-Type: application/json" -d @data.json https://ip.jena.at/discover
+
+rm data.json
