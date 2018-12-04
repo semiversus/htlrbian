@@ -1,5 +1,5 @@
 # How to use
-1. Download latest release of *HTLRbian* and unzip it locally
+1. Download latest release of *HTLRbian* ([here](https://github.com/semiversus/htlrbian/releases/download/v0.1/htlrbian.zip)) and unzip it locally
 2. Use [Etcher](https://www.balena.io/etcher/) to write the image to your SD card
 3. Re-insert the SD card on your PC and open file `htl.config` on drive `boot`
 4. Enter your HTL Rankweil username and password and save the file
@@ -10,4 +10,4 @@
 
 ![Putty Connection](documentation/putty.png)
 
-
+If you're unable to ping your Raspberry via `pi-max-muster.local` (please adapt here your username), you may have to install the [Bonjour Service](https://support.apple.com/kb/DL999). Another solution is work in progress.
