@@ -31,7 +31,7 @@ mount --bind /dev/pts ${CHROOT_PATH}/dev/pts
 echo "Copy overlay"
 cp overlay/* ${CHROOT_PATH} -r
 
-echo "Prepare chroot..."iUnconfigured.i
+echo "Prepare chroot..."
 sed -i 's/^/#CHROOT /g' ${CHROOT_PATH}/etc/ld.so.preload
 cp stage2.sh ${CHROOT_PATH}
 cp /usr/bin/qemu-arm-static ${CHROOT_PATH}/usr/bin

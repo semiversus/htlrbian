@@ -5,8 +5,8 @@ rm /etc/apt.conf.d/htl_proxy
 rm /etc/profile.d/htl_proxy.sh
 
 # source configuration to get configuration
-user=`grep "user=" /boot/htl.config|cut -f2 -d=`
-password=`grep "password=" /boot/htl.config|cut -f2 -d=`
+user=`grep "user=" /boot/htl.config|tr -d '\r'|cut -f2 -d=`
+password=`grep "password=" /boot/htl.config|tr -d '\r'|cut -f2 -d=`
 
 # check if a new username and password is given
 if [ -z "$user" ];
@@ -34,4 +34,9 @@ hostnamectl set-hostname $hostname
 # set password for user pi to the given user password
 echo "pi:$password" | chpasswd
 
+# set password for chezdav
+realm="ChezDAV"
+digest="$( printf "%s:%s:%s" "$user" "$realm" "$password" |
+           md5sum | awk '{print $1}' )"
 
+printf "%s:%s:%s\n" "$user" "$realm" "$digest" >> "/home/pi/.chezdav.htdigest"

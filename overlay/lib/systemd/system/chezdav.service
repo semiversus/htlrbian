@@ -5,7 +5,7 @@ Description=WebDAV Daemon for user pi
 Type=simple
 RemainAfterExit=yes
 User=pi
-ExecStart=chezdav -p 4201 -P /home/pi -d /etc/chezdav.htdigest
+ExecStart=/usr/bin/chezdav -p 4300 -P /home/pi -d /home/pi/.chezdav.htdigest; /usr/bin/socat tcp-l:4201,fork,reuseaddr tcp:127.0.0.1:4300
 
 [Install]
 WantedBy=multi-user.target

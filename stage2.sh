@@ -9,7 +9,7 @@ update-locale en_US.UTF-8
 # install packages
 apt update -qq
 apt upgrade -qqy
-apt install -qqy shellinabox chezdav
+apt install -qqy shellinabox chezdav socat
 
 # copy htl.config
 cp /usr/share/htl_setup/htl.config /boot
@@ -17,3 +17,4 @@ cp /usr/share/htl_setup/htl.config /boot
 # enable services
 systemctl enable ssh
 systemctl enable htl-network
+systemctl enable chezdav
