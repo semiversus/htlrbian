@@ -1,6 +1,6 @@
 [Unit]
 Description=Apply network configuration for HTL Rankweil
-ConditionPathExists=/boot/htl.config
+ConditionPathExists=/boot/htl.txt
 Before=avahi-daemon.service dhcpcd.service
 
 [Service]

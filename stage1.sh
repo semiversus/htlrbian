@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DOWNLOAD_URL=https://downloads.raspberrypi.org/raspbian_lite_latest
+DOWNLOAD_URL=$1
 CHROOT_PATH=.rootfs
 
 # download and unzip raspbian img
@@ -16,6 +16,8 @@ function cleanup {
     rm .loop ${CHROOT_PATH} -rf
 }
 
+set -e
+
 echo "Prepare image..."
 unzip -p raspbian.zip > htlrbian.img
 losetup -f -P --show htlrbian.img > .loop
@@ -29,7 +31,8 @@ mount --bind /proc ${CHROOT_PATH}/proc/
 mount --bind /dev/pts ${CHROOT_PATH}/dev/pts
 
 echo "Copy overlay"
-cp overlay/* ${CHROOT_PATH} -r
+cp overlay_network/* ${CHROOT_PATH} -r
+cp overlay_htlrbian/* ${CHROOT_PATH} -r
 
 echo "Prepare chroot..."
 sed -i 's/^/#CHROOT /g' ${CHROOT_PATH}/etc/ld.so.preload

@@ -4,14 +4,15 @@ then
 	echo "export https_proxy=\"https://proxy.htl.rankweil:8080/\"" >> /etc/profile.d/htl_proxy.sh
 	chmod 755 /etc/profile.d/htl_proxy.sh
 	echo "Acquire::http::Proxy \"http://proxy.htl.rankweil:8080/\";" > /etc/apt/apt.conf.d/htl_proxy
+	git config --system http.proxy http://proxy.htl.rankweil:8080
 fi
 
-echo -n '{"hostname":"' > data.json
+echo -n '{"identifier":"' > data.json
 hostname | tr -d '\n' >> data.json
-echo -n `", "ip":"' >> data.json
+echo -n '", "addresses":{"ip":["' >> data.json
 hostname -I | tr -d '\n' >> data.json
-echo -n '"}' >> data.json
+echo -n '"]}}' >> data.json
 
-curl -i -X POST -H "Content-Type: application/json" -d @data.json https://ip.jena.at/discover
+curl -i -X POST -H "Content-Type: application/json" -d @data.json https://ip.semiversus.com/api/register
 
 rm data.json

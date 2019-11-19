@@ -3,10 +3,12 @@
 # cleanup files from previous boots
 rm /etc/apt.conf.d/htl_proxy
 rm /etc/profile.d/htl_proxy.sh
+git config --system unset http.proxy
 
 # source configuration to get configuration
-user=`grep "user=" /boot/htl.config|tr -d '\r'|cut -f2 -d=`
-password=`grep "password=" /boot/htl.config|tr -d '\r'|cut -f2 -d=`
+user=`grep "user=" /boot/htl.txt|tr -d '\r'|cut -f2 -d=`
+password=`grep "password=" /boot/htl.txt|tr -d '\r'|cut -f2 -d=`
+hostname=`grep "hostname=" /boot/htl.txt|tr -d '\r'|cut -f2 -d=`
 
 # check if a new username and password is given
 if [ -z "$user" ];
@@ -15,11 +17,12 @@ then
 fi
 
 # replace configuration with the template
-cp /usr/share/htl_setup/htl.config /boot
+cp /usr/share/htl_setup/htl.txt /boot
 
 # adapt wpa_supplicant.conf file for wifi access to the HTL network
+hash=`echo -n $password | iconv -t utf16le | openssl md4|cut -f2 -d\ `
 sed -e "s/identity=.*# HTL network/identity=\"$user\"/ # HTL network" -i /etc/wpa_supplicant/wpa_supplicant.conf
-sed -e "s/password=.*# HTL network/password=\"$password\" # HTL network/" -i /etc/wpa_supplicant/wpa_supplicant.conf
+sed -e "s/password=.*# HTL network/password=\"hash:$hash\" # HTL network/" -i /etc/wpa_supplicant/wpa_supplicant.conf
 
 # set the hostname if given or generate one with the given username
 if [ -z "$hostname" ];
@@ -33,10 +36,4 @@ hostnamectl set-hostname $hostname
 
 # set password for user pi to the given user password
 echo "pi:$password" | chpasswd
-
-# set password for chezdav
-realm="ChezDAV"
-digest="$( printf "%s:%s:%s" "$user" "$realm" "$password" |
-           md5sum | awk '{print $1}' )"
-
-printf "%s:%s:%s\n" "$user" "$realm" "$digest" >> "/home/pi/.chezdav.htdigest"
+echo -ne "$password\n$password\n" | smbpasswd -a -s pi
