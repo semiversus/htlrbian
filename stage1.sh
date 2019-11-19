@@ -4,9 +4,9 @@ DOWNLOAD_URL=$1
 CHROOT_PATH=.rootfs
 
 # download and unzip raspbian img
-if [ ! -f raspbian.zip ]; then
+if [ ! -f $2_base.zip ]; then
     echo "Downloading Raspbian..."
-    wget ${DOWNLOAD_URL} -O raspbian.zip -q --show-progress
+    wget ${DOWNLOAD_URL} -O $2_base.zip -q --show-progress
 fi
 
 function cleanup {
@@ -19,8 +19,8 @@ function cleanup {
 set -e
 
 echo "Prepare image..."
-unzip -p raspbian.zip > htlrbian.img
-losetup -f -P --show htlrbian.img > .loop
+unzip -p $2_base.zip > $2.img
+losetup -f -P --show $2.img > .loop
 trap cleanup EXIT
 mkdir ${CHROOT_PATH}/boot -p
 mount -o rw `cat .loop`p2 ${CHROOT_PATH}
@@ -50,4 +50,5 @@ rm ${CHROOT_PATH}/usr/bin/qemu-arm-static
 echo "Zip image..."
 trap - EXIT
 cleanup
-zip htlrbian.zip htlrbian.img
+zip $2.zip $2.img
+
