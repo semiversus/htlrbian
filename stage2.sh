@@ -16,7 +16,7 @@ apt install -qqy shellinabox samba samba-common-bin
 
 # copy htl.txt
 cp /usr/share/htl_setup/htl.txt /boot
-bash
+
 # enable services
 systemctl enable ssh
 systemctl enable shellinabox
