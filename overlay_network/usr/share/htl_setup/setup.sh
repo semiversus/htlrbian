@@ -22,7 +22,7 @@ cp /usr/share/htl_setup/htl.txt /boot
 # adapt wpa_supplicant.conf file for wifi access to the HTL network
 hash=`echo -n $password | iconv -t utf16le | openssl md4|cut -f2 -d\ `
 sed -e "s/identity=.*# HTL network/identity=\"$user\"/ # HTL network" -i /etc/wpa_supplicant/wpa_supplicant.conf
-sed -e "s/password=.*# HTL network/password=\"hash:$hash\" # HTL network/" -i /etc/wpa_supplicant/wpa_supplicant.conf
+sed -e "s/password=.*# HTL network/password=hash:$hash # HTL network/" -i /etc/wpa_supplicant/wpa_supplicant.conf
 
 # set the hostname if given or generate one with the given username
 if [ -z "$hostname" ];

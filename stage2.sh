@@ -2,21 +2,24 @@
 
 export DEBIAN_FRONTEND=noninteractive
 
+set -e
+trap exit 1 ERR
+
 export LANGUAGE=en_GB.UTF-8
 export LC_ALL=en_GB.UTF-8
 export LANG=en_GB=UTF-8
 locale-gen en_GB.UTF-8
 
 apt update -qq
-apt upgrade -qqy
+#apt upgrade -qqy
 apt install -qqy shellinabox samba samba-common-bin
 
 # copy htl.txt
 cp /usr/share/htl_setup/htl.txt /boot
-
+bash
 # enable services
 systemctl enable ssh
-systemctl enable shellinaboxd
+systemctl enable shellinabox
 systemctl enable smbd
 systemctl enable nmbd
 

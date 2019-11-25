@@ -1,18 +1,24 @@
-if ping proxy.htl.ranwkeil -c1;
-then
-	echo "export http_proxy=\"http://proxy.htl.rankweil:8080/\"" > /etc/profile.d/htl_proxy.sh
-	echo "export https_proxy=\"https://proxy.htl.rankweil:8080/\"" >> /etc/profile.d/htl_proxy.sh
-	chmod 755 /etc/profile.d/htl_proxy.sh
-	echo "Acquire::http::Proxy \"http://proxy.htl.rankweil:8080/\";" > /etc/apt/apt.conf.d/htl_proxy
-	git config --system http.proxy http://proxy.htl.rankweil:8080
-fi
+case "$reason" in
+	BOUND|RENEW|REBIND|REBOOT|TIMEOUT)
+		if ping proxy.htl.rankweil -c1
+		then
+			echo "export http_proxy=\"http://proxy.htl.rankweil:8080/\"" > /etc/profile.d/htl_proxy.sh
+			echo "export https_proxy=\"http://proxy.htl.rankweil:8080/\"" >> /etc/profile.d/htl_proxy.sh
+			chmod 755 /etc/profile.d/htl_proxy.sh
+			echo "Acquire::http::Proxy \"http://proxy.htl.rankweil:8080/\";" > /etc/apt/apt.conf.d/htl_proxy
+			git config --system http.proxy http://proxy.htl.rankweil:8080
+			export https_proxy="http://proxy.htl.rankweil:8080/"
 
-echo -n '{"identifier":"' > data.json
-hostname | tr -d '\n' >> data.json
-echo -n '", "addresses":{"ip":["' >> data.json
-hostname -I | tr -d '\n' >> data.json
-echo -n '"]}}' >> data.json
+		fi
 
-curl -i -X POST -H "Content-Type: application/json" -d @data.json https://ip.semiversus.com/api/register
+		echo -n '{"identifier":"' > data.json
+		hostname | tr -d '\n' >> data.json
+		echo -n '", "addresses":{"ip":["' >> data.json
+		hostname -I | tr -d '\n' >> data.json
+		echo -n '"]}}' >> data.json
 
-rm data.json
+		curl --max-time 10 -i -X POST -H "Content-Type: application/json" -d @data.json https://ip.semiversus.com/api/register
+
+		rm data.json
+		;;
+esac
