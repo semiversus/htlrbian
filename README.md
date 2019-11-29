@@ -4,10 +4,15 @@
 3. Re-insert the SD card on your PC and open file `htl.txt` on drive `boot`
 4. Enter your HTL Rankweil username and password and save the file
 5. Unmount the SD card and boot your Raspberry Pi with the SD card
-6. The Raspberry Pi will be accessible on the HTL network via pi-*max-muster*.local (in this case the username was `max.muster`)
+6. The Raspberry Pi will be accessible on the HTL network via pi-*max-muster*.local (in this case the username was `max.muster`). You can additionaly look up your ip via https://ip.semiversus.com
 7. Use SSH client [Putty](https://the.earth.li/~sgtatham/putty/latest/w32/putty.exe) to connect to your Raspberry Pi.
 8. Username for login is `pi`, password is your HTL Rankweil password
 
 ![Putty Connection](documentation/putty.png)
 
-If you're unable to ping your Raspberry via `pi-max-muster.local` (please adapt here your username), you may have to install the [Bonjour Service](https://support.apple.com/kb/DL999). Another solution is work in progress.
+If you're unable to ping your Raspberry via `pi-max-muster.local` (please adapt here your username), you may have to install the [Bonjour Service](https://support.apple.com/kb/DL999). 
+
+# What is included
+* Windows Network Drive support via samba
+* SSH Server
+* ShellInABox via http Port 4200
