@@ -1,5 +1,7 @@
 case "$reason" in
 	BOUND|RENEW|REBIND|REBOOT|TIMEOUT)
+		echo "heartbeat" > /sys/class/leds/led0/trigger
+
 		if ping proxy.htl.rankweil -c1
 		then
 			echo "export http_proxy=\"http://proxy.htl.rankweil:8080/\"" > /etc/profile.d/htl_proxy.sh
@@ -20,5 +22,8 @@ case "$reason" in
 		curl --max-time 10 -i -X POST -H "Content-Type: application/json" -d @data.json https://ip.semiversus.com/api/register
 
 		rm data.json
+		;;
+	EXPIRE|FAIL|STOP|RELEASE)
+		echo "none" > /sys/class/leds/led0/trigger
 		;;
 esac
