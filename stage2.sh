@@ -11,7 +11,7 @@ export LANG=en_GB=UTF-8
 locale-gen en_GB.UTF-8
 
 apt update -qq
-#apt upgrade -qqy
+apt upgrade -qqy
 apt install -qqy shellinabox samba samba-common-bin vim python3-gpiozero python3-rpi.gpio python3-pigpio
 
 # copy htl.txt
