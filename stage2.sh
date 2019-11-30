@@ -11,7 +11,7 @@ export LANG=en_GB=UTF-8
 locale-gen en_GB.UTF-8
 
 apt update -qq
-apt upgrade -qqy
+#apt upgrade -qqy
 apt install -qqy shellinabox samba samba-common-bin vim python3-gpiozero python3-rpi.gpio python3-pigpio
 
 # copy htl.txt
@@ -30,5 +30,13 @@ echo 'deb http://raspbian.raspberrypi.org/raspbian/ stretch main contrib non-fre
 apt update
 apt install wpasupplicant -y
 apt-mark hold wpasupplicant
-cp -f /etc/apt/sources.list.bak /etc/apt/sources.list
-apt-get update
+mv -f /etc/apt/sources.list.bak /etc/apt/sources.list
+
+# cleanup apt
+apt update
+apt autoremove
+apt clean
+
+# fill left space with zeros (for better compression ratio)
+dd if=/dev/zero of=zero_file && :
+rm zero_file
