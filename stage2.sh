@@ -12,7 +12,7 @@ locale-gen en_GB.UTF-8
 
 apt update -qq
 #apt upgrade -qqy
-apt install -qqy shellinabox samba samba-common-bin
+apt install -qqy shellinabox samba samba-common-bin vim python3-gpiozero python3-rpi.gpio python3-pigpio
 
 # copy htl.txt
 cp /usr/share/htl_setup/htl.txt /boot
@@ -23,7 +23,7 @@ systemctl enable shellinabox
 systemctl enable smbd
 systemctl enable nmbd
 
-# temporary fix for WPA Enterprise on Raspbian Buster, connect Ethernet before running
+# temporary fix for WPA Enterprise on Raspbian Buster
 apt remove wpasupplicant -y
 mv -f /etc/apt/sources.list /etc/apt/sources.list.bak
 echo 'deb http://raspbian.raspberrypi.org/raspbian/ stretch main contrib non-free rpi' > /etc/apt/sources.list

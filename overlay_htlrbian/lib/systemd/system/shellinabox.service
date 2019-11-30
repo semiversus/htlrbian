@@ -5,7 +5,7 @@ After=sshd.service
 
 [Service]
 EnvironmentFile=/etc/default/shellinabox
-ExecStart=/usr/bin/shellinaboxd $SHELLINABOX_ARGS
+ExecStart=/usr/bin/shellinaboxd --no-beep -t
 Restart=on-failure
 
 [Install]

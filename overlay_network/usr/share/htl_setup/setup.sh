@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # cleanup files from previous boots
-rm /etc/apt.conf.d/htl_proxy
+rm /etc/apt/apt.conf.d/htl_proxy
 rm /etc/profile.d/htl_proxy.sh
 git config --system unset http.proxy
 
 # source configuration to get configuration
-user=`grep "user=" /boot/htl.txt|tr -d '\r'|cut -f2 -d=`
-password=`grep "password=" /boot/htl.txt|tr -d '\r'|cut -f2 -d=`
-hostname=`grep "hostname=" /boot/htl.txt|tr -d '\r'|cut -f2 -d=`
+user=`grep "user=" /boot/htl.txt|tr -d '\r'|cut -f2 -d=|xargs echo`
+password=`grep "password=" /boot/htl.txt|tr -d '\r'|cut -f2 -d=|xargs echo`
+hostname=`grep "hostname=" /boot/htl.txt|tr -d '\r'|cut -f2 -d=|xargs echo`
 
 # check if a new username and password is given
 if [ -z "$user" ];
