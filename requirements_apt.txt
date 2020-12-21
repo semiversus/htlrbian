@@ -1,0 +1,9 @@
+uuid-runtime
+shellinabox
+samba
+samba-common-bin
+screen
+vim
+python3-gpiozero
+python3-rpi.gpio
+python3-pigpio

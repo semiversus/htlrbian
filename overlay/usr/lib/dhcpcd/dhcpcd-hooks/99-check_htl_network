@@ -1,6 +1,6 @@
 case "$reason" in
 	BOUND|RENEW|REBIND|REBOOT|TIMEOUT)
-		echo "heartbeat" > /sys/class/leds/led0/trigger
+		echo "heartbeat" > /sys/class/leds/led0/trigger  # let led blink
 
 		if ping proxy.htl.rankweil -c1
 		then
@@ -13,11 +13,11 @@ case "$reason" in
 
 		fi
 
-		echo -n '{"identifier":"' > data.json
+		echo -n '{"hostname":"' > data.json
 		hostname | tr -d '\n' >> data.json
-		echo -n '", "addresses":{"ip":["' >> data.json
+		echo -n '", "ip_list":["' >> data.json
 		hostname -I | tr -d '\n' >> data.json
-		echo -n '"]}}' >> data.json
+		echo -n '"]}' >> data.json
 
 		curl --max-time 10 -i -X POST -H "Content-Type: application/json" -d @data.json https://ip.semiversus.com/api/register
 

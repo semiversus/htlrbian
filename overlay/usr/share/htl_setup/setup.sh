@@ -10,6 +10,13 @@ user=`grep "user=" /boot/htl.txt|tr -d '\r'|cut -f2 -d=|xargs echo`
 password=`grep "password=" /boot/htl.txt|tr -d '\r'|cut -f2 -d=|xargs echo`
 hostname=`grep "hostname=" /boot/htl.txt|tr -d '\r'|cut -f2 -d=|xargs echo`
 
+# user wifi config
+wifi_ssid=`grep "ssid=" /boot/wifi.txt|tr -d '\r'|cut -f2 -d=|xargs echo`
+wifi_password=`grep "password=" /boot/wifi.txt|tr -d '\r'|cut -f2 -d=|xargs echo`
+
+sed -e "s/ssid=.*# User network/ssid=\"$wifi_ssid\"/ # User network" -i /etc/wpa_supplicant/wpa_supplicant.conf
+sed -e "s/psk=.*# User network/psk=\"$wifi_password\" # User network/" -i /etc/wpa_supplicant/wpa_supplicant.conf
+
 # check if a new username and password is given
 if [ -z "$user" ];
 then
@@ -37,3 +44,8 @@ hostnamectl set-hostname $hostname
 # set password for user pi to the given user password
 echo "pi:$password" | chpasswd
 echo -ne "$password\n$password\n" | smbpasswd -a -s pi
+
+# enable wifi
+rfkill unblock 0
+# disable wifi power management
+iwconfig wlan0 power off

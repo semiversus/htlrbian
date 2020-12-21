@@ -1,0 +1,11 @@
+[Unit]
+Description=Fix MIME database
+ConditionFileNotEmpty=!/usr/share/mime/aliases
+Before=lightdm.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/update-mime-database /usr/share/mime
+
+[Install]
+WantedBy=multi-user.target
