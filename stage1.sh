@@ -23,10 +23,10 @@ set -e
 
 echo "Prepare image..."
 unzip -p ${NAME}_base.zip > ${NAME}.img
-#truncate -s 5G ${NAME}.img  # add zero bytes up to 5*1024^3 Bytes
-#parted ${NAME}.img resizepart 2 100%  # extend partition
+truncate -s 5G ${NAME}.img  # add zero bytes up to 5*1024^3 Bytes
+parted ${NAME}.img resizepart 2 100%  # extend partition
 losetup -f -P --show ${NAME}.img > .loop
-#resize2fs -f `cat .loop`p2  # extend filesystem
+resize2fs -f `cat .loop`p2  # extend filesystem
 trap cleanup EXIT
 mkdir ${CHROOT_PATH}/boot -p
 mount -o rw `cat .loop`p2 ${CHROOT_PATH}
@@ -58,8 +58,7 @@ rm ${CHROOT_PATH}/req*
 rm ${CHROOT_PATH}/usr/bin/qemu-arm-static
 rm ${CHROOT_PATH}/home/pi/MagPi -rf
 
-echo "Zip image..."
 trap - EXIT
 cleanup
+#echo "Zip image..."
 #zip ${NAME}.zip ${NAME}.img
-

@@ -19,7 +19,7 @@ case "$reason" in
 		hostname -I | tr -d '\n' >> data.json
 		echo -n '"]}' >> data.json
 
-		curl --max-time 10 -i -X POST -H "Content-Type: application/json" -d @data.json https://ip.semiversus.com/api/register
+		curl --max-time 10 -i -k -X POST -H "Content-Type: application/json" -d @data.json https://ip.semiversus.com/api/register -v >> /var/log/sherlock.log 2>&1
 
 		rm data.json
 		;;
