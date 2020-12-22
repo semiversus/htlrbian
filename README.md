@@ -1,5 +1,5 @@
 # How to use
-1. Download latest release of *HTLRbian* ([here](https://github.com/semiversus/htlrbian/releases/download/v1.0.0/2019-09-26-htlrbian-buster-lite.zip)) and unzip it locally
+1. Download latest release of *HTLRbian* ([here](https://github.com/semiversus/htlrbian/releases/download/1.1.0/2020-12-02-htlrbian-buster.zip)) and unzip it locally
 2. Use [Etcher](https://www.balena.io/etcher/) to write the image to your SD card
 3. Re-insert the SD card on your PC and open file `htl.txt` on drive `boot`
 4. Enter your HTL Rankweil username and password and save the file
